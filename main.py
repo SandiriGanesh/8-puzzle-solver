@@ -15,6 +15,26 @@ def find_blank(board):
                 return (row, col)
 
 
+def get_possible_moves(board):
+    row, col = find_blank(board)
+
+    moves = []
+
+    if row > 0:
+        moves.append("up")
+
+    if row < 2:
+        moves.append("down")
+
+    if col > 0:
+        moves.append("left")
+
+    if col < 2:
+        moves.append("right")
+
+    return moves
+
+
 initial_state = [
     [1, 2, 3],
     [4, 0, 6],
@@ -25,5 +45,7 @@ print("Current Board:\n")
 print_board(initial_state)
 
 blank_position = find_blank(initial_state)
-
 print("\nBlank Position:", blank_position)
+
+possible_moves = get_possible_moves(initial_state)
+print("\nPossible Moves:", possible_moves)

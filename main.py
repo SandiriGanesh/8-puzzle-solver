@@ -35,6 +35,39 @@ def get_possible_moves(board):
     return moves
 
 
+def move(board, direction):
+    row, col = find_blank(board)
+
+    # create a copy of the board
+    new_board = [r[:] for r in board]
+
+    if direction == "up":
+        new_board[row][col], new_board[row - 1][col] = (
+            new_board[row - 1][col],
+            new_board[row][col],
+        )
+
+    elif direction == "down":
+        new_board[row][col], new_board[row + 1][col] = (
+            new_board[row + 1][col],
+            new_board[row][col],
+        )
+
+    elif direction == "left":
+        new_board[row][col], new_board[row][col - 1] = (
+            new_board[row][col - 1],
+            new_board[row][col],
+        )
+
+    elif direction == "right":
+        new_board[row][col], new_board[row][col + 1] = (
+            new_board[row][col + 1],
+            new_board[row][col],
+        )
+
+    return new_board
+
+
 initial_state = [
     [1, 2, 3],
     [4, 0, 6],
@@ -44,8 +77,11 @@ initial_state = [
 print("Current Board:\n")
 print_board(initial_state)
 
-blank_position = find_blank(initial_state)
-print("\nBlank Position:", blank_position)
+print("\nBlank Position:", find_blank(initial_state))
 
-possible_moves = get_possible_moves(initial_state)
-print("\nPossible Moves:", possible_moves)
+print("\nPossible Moves:", get_possible_moves(initial_state))
+
+new_state = move(initial_state, "left")
+
+print("\nBoard After Moving Left:\n")
+print_board(new_state)

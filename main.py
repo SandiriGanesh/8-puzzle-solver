@@ -38,7 +38,7 @@ def get_possible_moves(board):
 def move(board, direction):
     row, col = find_blank(board)
 
-    # create a copy of the board
+    # Create a copy of the board
     new_board = [r[:] for r in board]
 
     if direction == "up":
@@ -68,6 +68,18 @@ def move(board, direction):
     return new_board
 
 
+def get_children(board):
+    children = []
+
+    moves = get_possible_moves(board)
+
+    for move_direction in moves:
+        child = move(board, move_direction)
+        children.append(child)
+
+    return children
+
+
 initial_state = [
     [1, 2, 3],
     [4, 0, 6],
@@ -81,7 +93,8 @@ print("\nBlank Position:", find_blank(initial_state))
 
 print("\nPossible Moves:", get_possible_moves(initial_state))
 
-new_state = move(initial_state, "left")
+children = get_children(initial_state)
 
-print("\nBoard After Moving Left:\n")
-print_board(new_state)
+for i, child in enumerate(children, start=1):
+    print(f"\nChild {i}:\n")
+    print_board(child)

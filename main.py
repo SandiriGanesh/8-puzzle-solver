@@ -1,3 +1,6 @@
+from collections import deque
+
+
 def print_board(board):
     for row in board:
         for number in row:
@@ -38,7 +41,6 @@ def get_possible_moves(board):
 def move(board, direction):
     row, col = find_blank(board)
 
-    # Create a copy of the board
     new_board = [r[:] for r in board]
 
     if direction == "up":
@@ -80,21 +82,59 @@ def get_children(board):
     return children
 
 
+def board_to_tuple(board):
+    return tuple(tuple(row) for row in board)
+
+
+def is_goal(board, goal):
+    return board == goal
+
+
+def bfs(start_board, goal_board):
+    queue = deque()
+    visited = set()
+
+    queue.append(start_board)
+    visited.add(board_to_tuple(start_board))
+
+    while queue:
+        current_board = queue.popleft()
+
+        print("\nExploring:")
+        print_board(current_board)
+
+        if is_goal(current_board, goal_board):
+            print("\nGoal Found!")
+            return True
+
+        children = get_children(current_board)
+
+        for child in children:
+            child_key = board_to_tuple(child)
+
+            if child_key not in visited:
+                visited.add(child_key)
+                queue.append(child)
+
+    print("\nNo Solution Found!")
+    return False
+
+
 initial_state = [
     [1, 2, 3],
     [4, 0, 6],
     [7, 5, 8]
 ]
 
-print("Current Board:\n")
+goal_state = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 0]
+]
+
+print("Initial Board:\n")
 print_board(initial_state)
 
-print("\nBlank Position:", find_blank(initial_state))
+print("\nStarting BFS Search...")
 
-print("\nPossible Moves:", get_possible_moves(initial_state))
-
-children = get_children(initial_state)
-
-for i, child in enumerate(children, start=1):
-    print(f"\nChild {i}:\n")
-    print_board(child)
+bfs(initial_state, goal_state)

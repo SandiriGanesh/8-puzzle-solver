@@ -46,25 +46,25 @@ def move(board, direction):
     if direction == "up":
         new_board[row][col], new_board[row - 1][col] = (
             new_board[row - 1][col],
-            new_board[row][col],
+            new_board[row][col]
         )
 
     elif direction == "down":
         new_board[row][col], new_board[row + 1][col] = (
             new_board[row + 1][col],
-            new_board[row][col],
+            new_board[row][col]
         )
 
     elif direction == "left":
         new_board[row][col], new_board[row][col - 1] = (
             new_board[row][col - 1],
-            new_board[row][col],
+            new_board[row][col]
         )
 
     elif direction == "right":
         new_board[row][col], new_board[row][col + 1] = (
             new_board[row][col + 1],
-            new_board[row][col],
+            new_board[row][col]
         )
 
     return new_board
@@ -73,9 +73,7 @@ def move(board, direction):
 def get_children(board):
     children = []
 
-    moves = get_possible_moves(board)
-
-    for move_direction in moves:
+    for move_direction in get_possible_moves(board):
         child = move(board, move_direction)
         children.append(child)
 
@@ -93,30 +91,61 @@ def is_goal(board, goal):
 def bfs(start_board, goal_board):
     queue = deque()
     visited = set()
+    parents = {}
+
+    start_key = board_to_tuple(start_board)
 
     queue.append(start_board)
-    visited.add(board_to_tuple(start_board))
+    visited.add(start_key)
+
+    parents[start_key] = None
 
     while queue:
+
         current_board = queue.popleft()
 
-        print("\nExploring:")
-        print_board(current_board)
-
         if is_goal(current_board, goal_board):
+
             print("\nGoal Found!")
+
+            path = []
+
+            current_key = board_to_tuple(current_board)
+
+            while current_key is not None:
+                board = [list(row) for row in current_key]
+                path.append(board)
+                current_key = parents[current_key]
+
+            path.reverse()
+
+            print("\nSolution Path:\n")
+
+            for step, board in enumerate(path):
+                print(f"Step {step}:")
+                print_board(board)
+                print()
+
+            print("Total Moves:", len(path) - 1)
+
             return True
 
         children = get_children(current_board)
 
         for child in children:
+
             child_key = board_to_tuple(child)
 
             if child_key not in visited:
+
                 visited.add(child_key)
+
+                parents[child_key] = board_to_tuple(current_board)
+
                 queue.append(child)
 
     print("\nNo Solution Found!")
+
     return False
 
 

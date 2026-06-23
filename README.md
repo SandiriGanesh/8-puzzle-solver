@@ -1,11 +1,17 @@
-8 Puzzle Solver using Breadth First Search (BFS)
+# 8 Puzzle Solver using Breadth First Search (BFS)
 
-Project Overview
+## Project Overview
+
 This project solves the classic 8-puzzle problem using the Breadth First Search (BFS) algorithm in Python.
+
 The program explores puzzle states level by level and finds the shortest path from the initial state to the goal state.
 
-Problem Statement
+---
+
+## Problem Statement
+
 The objective of the 8-puzzle problem is to move the blank tile (represented by 0) to reach the desired goal state.
+
 The blank tile can move:
 
 * Up
@@ -15,7 +21,10 @@ The blank tile can move:
 
 The program avoids repeated states and finds the shortest solution using BFS.
 
-Objectives
+---
+
+## Objectives
+
 * Represent the puzzle as a 3×3 board.
 * Find the blank tile.
 * Generate valid moves.
@@ -24,20 +33,32 @@ Objectives
 * Track visited states.
 * Reconstruct the solution path.
 
-Algorithm Used
+---
+
+## Algorithm Used
 
 **Breadth First Search (BFS)**
+
 BFS explores the state space level by level and guarantees the shortest solution path.
 
-Dependencies
+---
+
+## Dependencies
+
 * Python 3.x
 * collections.deque
 
-Project Files
+---
+
+## Project Files
+
 * main.py
 * README.md
 
-Features
+---
+
+## Features
+
 * Board visualization
 * Blank tile detection
 * Valid move generation
